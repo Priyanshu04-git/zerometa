@@ -54,7 +54,7 @@ export default function AboutPage() {
 
       <div className="flex flex-wrap gap-3 border-t border-border pt-6">
         <Link className="inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/">Clean a file <ArrowRight className="ml-2 size-4" /></Link>
-        <Link className="inline-flex items-center rounded-full border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/privacy">Read the privacy notes</Link>
+        <Link className="inline-flex items-center rounded-full border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/privacy.html">Read the privacy notes</Link>
       </div>
     </article>
   );

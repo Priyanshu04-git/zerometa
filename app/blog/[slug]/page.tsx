@@ -114,7 +114,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/blog">Blog</Link>
+              <Link href="/blog.html">Blog</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

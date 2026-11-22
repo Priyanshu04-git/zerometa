@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         <p className="mt-3 text-sm leading-6 text-muted-foreground">Keep your browser updated, review the evidence report, and open the cleaned file before sharing it. For highly sensitive material, use a trusted offline environment and independently verify the result with a specialist tool such as ExifTool.</p>
       </section>
 
-      <div className="flex flex-wrap gap-3 border-t border-border pt-6"><Link className="inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/">Return to ZeroMeta <ArrowRight className="ml-2 size-4" /></Link><Link className="inline-flex items-center rounded-full border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/about">About the project</Link></div>
+      <div className="flex flex-wrap gap-3 border-t border-border pt-6"><Link className="inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/">Return to ZeroMeta <ArrowRight className="ml-2 size-4" /></Link><Link className="inline-flex items-center rounded-full border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" href="/about.html">About the project</Link></div>
     </article>
   );
 }

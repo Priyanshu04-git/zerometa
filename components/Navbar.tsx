@@ -15,9 +15,9 @@ const Logo = () => (
 const Navbar = () => {
   const pathname = usePathname();
   const links = [
-    { href: "/about", label: "About" },
-    { href: "/privacy", label: "Privacy" },
-    { href: "/how-it-works", label: "How it works" },
+    { href: "/about.html", label: "About" },
+    { href: "/privacy.html", label: "Privacy" },
+    { href: "/how-it-works.html", label: "How it works" },
   ];
 
   return (
