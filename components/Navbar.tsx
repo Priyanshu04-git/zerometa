@@ -2,6 +2,7 @@
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
 import Typography from "./Typography";
+import { usePathname } from "next/navigation";
 
 const Logo = () => (
   <svg viewBox="0 0 53 53" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-[0.9em] w-auto text-foreground">
@@ -12,6 +13,13 @@ const Logo = () => (
 );
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const links = [
+    { href: "/about", label: "About" },
+    { href: "/privacy", label: "Privacy" },
+    { href: "/how-it-works", label: "How it works" },
+  ];
+
   return (
     <header className="relative z-50">
       <nav className="h-40 flex flex-col sm:flex-row gap-(--space-lg) justify-center sm:justify-between items-start sm:items-center">
@@ -29,7 +37,10 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="gap-(--space-md) hidden sm:flex">
+        <div className="flex items-center gap-(--space-md)">
+          <div className="flex items-center gap-1 text-sm font-medium" aria-label="Site navigation">
+            {links.map((link) => <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined} className={`rounded-full px-3 py-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${pathname === link.href ? "bg-muted text-foreground" : "text-muted-foreground"}`}>{link.label}</Link>)}
+          </div>
           <ThemeToggle />
         </div>
       </nav>

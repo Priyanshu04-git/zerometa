@@ -106,6 +106,7 @@ export default function Dropzone({ fileStore, fileStatuses, fileErrors = {}, onF
         <input ref={fileInputRef} type="file" multiple accept={acceptedExtensions.join(",")} onClick={(event) => event.stopPropagation()} onChange={(event) => event.target.files && handleFiles(event.target.files)} className="hidden" aria-hidden="true" />
         <div className="flex size-16 items-center justify-center rounded-2xl bg-(--accent-secondary) text-(--accent-primary)"><FileIcon size={30} strokeWidth={1.8} /></div>
         <div className="flex flex-col items-center text-center leading-tight"><Typography as="p" variant="label" className="leading-tight">Drop files here</Typography><Typography as="p" variant="bodySm" muted className="mt-2">or click to browse · paste an image/file from your clipboard</Typography></div>
+        <p className="max-w-xl text-center text-xs leading-5 text-muted-foreground">HEIC/HEIF, OGG, TIFF, and AVI are not accepted yet because ZeroMeta does not have validated structure-specific cleaners for them.</p>
         <div className="flex flex-wrap justify-center gap-2" onClick={(event) => event.stopPropagation()}>
           <Button type="button" variant="outline" size="sm" disabled={processing} onClick={openFolderPicker}><FolderOpen className="mr-2 size-4" /> Choose folder</Button>
           <Button type="button" variant="ghost" size="sm" disabled={processing} onClick={() => toast.info("Paste a file with Ctrl/Cmd + V while this page is focused")}><ClipboardPaste className="mr-2 size-4" /> Paste from clipboard</Button>
