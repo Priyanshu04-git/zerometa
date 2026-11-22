@@ -8,58 +8,26 @@ import type { StoredFile } from "./Dropzone";
 
 type ClearAllButtonProps = {
   fileStore: StoredFile[];
-  setFileStore: (files: StoredFile[]) => void;
   processing: boolean;
+  onClearAll: () => void;
 };
 
-const ClearAllButton = ({ fileStore, setFileStore, processing }: ClearAllButtonProps) => {
+const ClearAllButton = ({ fileStore, processing, onClearAll }: ClearAllButtonProps) => {
   const [open, setOpen] = useState(false);
-
   return (
     <>
-      <Button
-        className="type-fluid type-button p-(--fluid-md-xl)"
-        disabled={fileStore.length <= 0 || processing}
-        variant="link"
-        onClick={() => setOpen(true)}
-      >
+      <Button className="type-fluid type-button px-2" disabled={fileStore.length <= 0 || processing} variant="link" onClick={() => setOpen(true)}>
         Clear all
       </Button>
-
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          showCloseButton={false}
-          className="border-2 border-foreground rounded-(--corner-radius) bg-background shadow-none p-(--space-xl) gap-(--space-lg)"
-        >
+        <DialogContent showCloseButton={false} className="rounded-2xl border-2 border-foreground bg-background p-(--space-xl) shadow-xl">
           <DialogHeader className="items-start text-left gap-(--space-sm)">
-            <DialogTitle className="leading-none">
-              <Typography as="span" variant="label" weight={600}>
-                Clear all files?
-              </Typography>
-            </DialogTitle>
-            <DialogDescription>
-              <Typography as="span" variant="bodySm" muted>
-                Are you sure you want to clear all files? This can&apos;t be undone.
-              </Typography>
-            </DialogDescription>
+            <DialogTitle className="leading-none"><Typography as="span" variant="label" weight={600}>Clear all files?</Typography></DialogTitle>
+            <DialogDescription><Typography as="span" variant="bodySm" muted>Queued files, results, and comparison state will be removed from this tab.</Typography></DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-(--space-lg)">
-            <Button
-              className="type-fluid type-button border-2 border-foreground bg-background text-foreground hover:bg-muted"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              className="type-fluid type-button border-2 border-foreground text-white"
-              onClick={() => {
-                setFileStore([]);
-                setOpen(false);
-              }}
-            >
-              Clear all
-            </Button>
+            <Button className="border-2 border-foreground bg-background text-foreground hover:bg-muted" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button variant="destructive" className="border-2 border-foreground text-white" onClick={() => { onClearAll(); setOpen(false); }}>Clear all</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

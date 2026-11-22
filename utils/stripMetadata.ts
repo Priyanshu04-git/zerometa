@@ -366,7 +366,7 @@ export function sanitizeWordprocessingXml(xml: string): string {
 
 export async function stripDocxMetadata(file: File): Promise<File | null> {
   try {
-    if (!file.name.endsWith(".docx")) {
+    if (!file.name.toLowerCase().endsWith(".docx")) {
       throw new Error("Unsupported file type. Only .docx files are allowed.");
     }
 

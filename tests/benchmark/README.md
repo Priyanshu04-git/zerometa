@@ -1,6 +1,6 @@
-# PrivMeta A/B benchmark
+# ZeroMeta A/B benchmark
 
-This suite compares two complete PrivMeta builds with exactly the same fixture files. It records:
+This suite compares two complete ZeroMeta builds with exactly the same fixture files. It records:
 
 - privacy-policy and ExifTool validation results;
 - browser decode/playback integrity and preserved technical fields;
@@ -19,7 +19,7 @@ Local branch mode is authoritative for cleaner correctness and processing compar
 The benchmark code only needs to exist in the current checkout. It drives both applications from the outside through their file inputs and download UI.
 
 ```powershell
-npm run benchmark:compare -- --old=https://www.privmeta.com --new=https://YOUR-WORKER.workers.dev --old-label=Vercel-master --new-label=Cloudflare-migration --runs=5
+npm run benchmark:compare -- --old=https://privmeta-n4x4wqum.manus.space --new=https://YOUR-WORKER.workers.dev --old-label=Vercel-master --new-label=Cloudflare-migration --runs=5
 ```
 
 This mode includes real CDN, network and hosting differences. Run it more than once if comparing page-load timings.

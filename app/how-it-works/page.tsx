@@ -6,20 +6,20 @@ import Typography from "@/components/Typography";
 
 export const metadata: Metadata = {
   title: "How it Works - Private Metadata Removal",
-  description: "See how PrivMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
-  alternates: { canonical: "https://www.privmeta.com/how-it-works" },
+  description: "See how ZeroMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
+  alternates: { canonical: "https://privmeta-n4x4wqum.manus.space/how-it-works" },
   openGraph: {
     title: "How it Works - Private Metadata Removal",
-    description: "See how PrivMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
-    url: "https://www.privmeta.com/how-it-works",
-    siteName: "PrivMeta",
+    description: "See how ZeroMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
+    url: "https://privmeta-n4x4wqum.manus.space/how-it-works",
+    siteName: "ZeroMeta",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 628, alt: "How PrivMeta Works" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 628, alt: "How ZeroMeta Works" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "How it Works - Private Metadata Removal",
-    description: "See how PrivMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
+    description: "See how ZeroMeta removes targeted metadata from supported files in your browser, with no account or file upload.",
     images: ["/og-image.png"],
   },
 };
@@ -41,15 +41,15 @@ const faqSchema = {
       name: "Are my files uploaded?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. File bytes are read and cleaned in your browser and are not sent to PrivMeta, Cloudflare, Sentry, or another processing service. The website may still make ordinary requests for page assets and operational telemetry, but those requests do not include your file contents or file names.",
+        text: "No. File bytes are read and cleaned in your browser and are not sent to ZeroMeta, Cloudflare, Sentry, or another processing service. The website may still make ordinary requests for page assets and operational telemetry, but those requests do not include your file contents or file names.",
       },
     },
     {
       "@type": "Question",
-      name: "What types of metadata does PrivMeta remove?",
+      name: "What types of metadata does ZeroMeta remove?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "PrivMeta targets documented metadata structures for each supported format: image EXIF/XMP/IPTC, standard PDF properties, DOCX package and author identities, common audio tags, and MP4/MOV or Matroska container metadata. Exact coverage and limitations are documented publicly.",
+        text: "ZeroMeta targets documented metadata structures for each supported format: image EXIF/XMP/IPTC, standard PDF properties, DOCX package and author identities, common audio tags, and MP4/MOV or Matroska container metadata. Exact coverage and limitations are documented publicly.",
       },
     },
     {
@@ -57,7 +57,7 @@ const faqSchema = {
       name: "How can I remove metadata from photos privately?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "PrivMeta removes EXIF, XMP, IPTC and comment structures targeted by its JPG, PNG, GIF and WebP cleaners. JPEG image data and GIF frames are copied without re-encoding; static PNG and WebP images are raster re-encoded by the browser.",
+        text: "ZeroMeta removes EXIF, XMP, IPTC and comment structures targeted by its JPG, PNG, GIF and WebP cleaners. JPEG image data and GIF frames are copied without re-encoding; static PNG and WebP images are raster re-encoded by the browser.",
       },
     },
     {
@@ -65,7 +65,7 @@ const faqSchema = {
       name: "Is there a truly private way to clean document metadata?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "PrivMeta removes standard PDF properties and identifiers, plus DOCX document properties and author/account identities, entirely client-side. It does not redact visible document content; DOCX comment text and tracked-change markup are intentionally preserved.",
+        text: "ZeroMeta removes standard PDF properties and identifiers, plus DOCX document properties and author/account identities, entirely client-side. It does not redact visible document content; DOCX comment text and tracked-change markup are intentionally preserved.",
       },
     },
     {
@@ -73,7 +73,7 @@ const faqSchema = {
       name: "Does a successful clean guarantee that a file is anonymous?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. PrivMeta removes the documented structures it recognises, but visible or audible content, filenames, unknown metadata structures, comments, and other application-specific data may still identify someone. Review sensitive files before sharing them.",
+        text: "No. ZeroMeta removes the documented structures it recognises, but visible or audible content, filenames, unknown metadata structures, comments, and other application-specific data may still identify someone. Review sensitive files before sharing them.",
       },
     },
   ],
@@ -89,7 +89,7 @@ export default function HowItWorks() {
       {/* Hero */}
       <section className="w-full">
         <Typography as="h1" variant="hero">
-          PrivMeta removes targeted privacy-sensitive metadata in your browser, before your file is shared.
+          ZeroMeta removes targeted privacy-sensitive metadata in your browser, before your file is shared.
         </Typography>
       </section>
 
@@ -149,7 +149,7 @@ export default function HowItWorks() {
           Coverage and limitations
         </Typography>
         <Typography variant="body" muted>
-          Metadata formats are extensible, so no tool can safely promise that every unknown field in every file is gone. PrivMeta removes
+          Metadata formats are extensible, so no tool can safely promise that every unknown field in every file is gone. ZeroMeta removes
           documented structures for each supported format and fails instead of guessing when a container cannot be parsed safely. It does
           not redact visible or audible content. DOCX comment text and tracked-change markup are preserved, although their author identities,
           dates and revision-session IDs are cleaned.
@@ -158,7 +158,7 @@ export default function HowItWorks() {
           The exact removal targets, preservation behaviour, test evidence and known limitations are documented in the project&apos;s{" "}
           <a
             className="underline"
-            href="https://github.com/tonixx/privmeta/blob/master/docs/PRIVACY_AND_FORMAT_COVERAGE.md"
+            href="https://github.com/Priyanshu04-git/zerometa/blob/main/docs/PRIVACY_AND_FORMAT_COVERAGE.md"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -241,7 +241,7 @@ export default function HowItWorks() {
               No. File bytes are read and cleaned in your browser and are not sent to a processing server. The site may still make ordinary
               requests for page assets and operational telemetry, but those requests do not include file contents or file names. The source
               code is viewable on{" "}
-              <a className="underline" href="https://github.com/tonixx/privmeta" target="_blank" rel="noopener noreferrer">
+              <a className="underline" href="https://github.com/Priyanshu04-git/zerometa" target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
               .
@@ -250,10 +250,10 @@ export default function HowItWorks() {
 
           <div className="flex flex-col gap-(--space-sm)">
             <Typography as="h3" variant="bodyLg" weight={600}>
-              What types of metadata does PrivMeta remove?
+              What types of metadata does ZeroMeta remove?
             </Typography>
             <Typography variant="body" muted>
-              PrivMeta targets documented structures for each format: image EXIF/XMP/IPTC, standard PDF properties, DOCX package and author
+              ZeroMeta targets documented structures for each format: image EXIF/XMP/IPTC, standard PDF properties, DOCX package and author
               identities, common audio tags, and MP4/MOV or Matroska container metadata. See the coverage audit above for exact details.
             </Typography>
           </div>
@@ -263,7 +263,7 @@ export default function HowItWorks() {
               How can I remove metadata from photos privately?
             </Typography>
             <Typography variant="body" muted>
-              Add a JPG, PNG, WEBP or GIF image to the dropzone. PrivMeta removes the metadata structures targeted for that format, including
+              Add a JPG, PNG, WEBP or GIF image to the dropzone. ZeroMeta removes the metadata structures targeted for that format, including
               common GPS and device fields, and returns the result directly in your browser.
             </Typography>
           </div>
@@ -273,7 +273,7 @@ export default function HowItWorks() {
               Is there a private way to clean document metadata?
             </Typography>
             <Typography variant="body" muted>
-              Yes. PrivMeta processes PDFs and DOCX files entirely in your browser. It removes standard PDF properties and DOCX document
+              Yes. ZeroMeta processes PDFs and DOCX files entirely in your browser. It removes standard PDF properties and DOCX document
               properties and author identities. It does not redact visible content, and it preserves DOCX comments and tracked-change markup.
             </Typography>
           </div>
@@ -283,7 +283,7 @@ export default function HowItWorks() {
               Does a successful clean guarantee that a file is anonymous?
             </Typography>
             <Typography variant="body" muted>
-              No. Visible images, text, voices, filenames and unknown application-specific structures can still identify someone. PrivMeta
+              No. Visible images, text, voices, filenames and unknown application-specific structures can still identify someone. ZeroMeta
               verifies the metadata structures it targets; you should still review sensitive content and rename sensitive filenames before
               sharing.
             </Typography>

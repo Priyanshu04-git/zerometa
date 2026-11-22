@@ -1,6 +1,6 @@
-# PrivMeta
+# ZeroMeta
 
-[PrivMeta](https://www.privmeta.com) is a free, open-source metadata remover.
+[ZeroMeta](https://privmeta-n4x4wqum.manus.space) is a free, open-source metadata remover.
 File bytes are processed in the browser and are not uploaded by the cleaning
 code.
 

@@ -34,11 +34,11 @@ Metadata can reveal sensitive information even when the main content seems harml
 - Document authorship can expose confidential sources
 - File creation dates can track your activities
 
-## The PrivMeta Solution
+## The ZeroMeta Solution
 
-If you want to remove documented metadata structures without sending file bytes to a processing service, **PrivMeta** runs its cleaners in your browser. The website may make ordinary asset and operational-telemetry requests, but the cleaning path does not upload file contents or file names.
+If you want to remove documented metadata structures without sending file bytes to a processing service, **ZeroMeta** runs its cleaners in your browser. The website may make ordinary asset and operational-telemetry requests, but the cleaning path does not upload file contents or file names.
 
-Try PrivMeta today to:
+Try ZeroMeta today to:
 
 - [Remove hidden location data from photos](/blog/how-to-strip-metadata-from-photos)
 - [Strip authorship details from Word documents](/blog/remove-metadata-from-word-document)
@@ -51,12 +51,12 @@ Try PrivMeta today to:
 1. **Regularly clean files** before sharing
 2. **Disable location services** in camera apps
 3. **Review privacy settings** in document editors
-4. **Use local processing tools** like PrivMeta
+4. **Use local processing tools** like ZeroMeta
 
 Understanding metadata is the first step to digital privacy. By being aware of these hidden details and using the right tools, you can take control of your personal information.
 
 ## Remove Your File Metadata Now
 
-Now you know what metadata is and what it can reveal. [PrivMeta](/) removes documented metadata structures from its supported photo, document, PDF, video and audio formats in your browser without uploading file bytes.
+Now you know what metadata is and what it can reveal. [ZeroMeta](/) removes documented metadata structures from its supported photo, document, PDF, video and audio formats in your browser without uploading file bytes.
 
 [Remove Metadata Free](/)

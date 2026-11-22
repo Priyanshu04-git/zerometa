@@ -1,13 +1,13 @@
 # Privacy model and metadata coverage
 
-This document defines what PrivMeta's public privacy and metadata-removal
+This document defines what ZeroMeta's public privacy and metadata-removal
 claims mean. It should be updated whenever a supported format or stripping
 algorithm changes.
 
 ## Privacy boundary
 
 File bytes are read and transformed by JavaScript in the user's browser. The
-cleaning code does not upload file bytes to PrivMeta, Cloudflare, Sentry, or any
+cleaning code does not upload file bytes to ZeroMeta, Cloudflare, Sentry, or any
 other service. The static site may still make ordinary network requests for
 page assets and, when configured, privacy-conscious operational telemetry.
 Those requests are separate from file processing and must not include file
@@ -21,7 +21,7 @@ sensitive.
 
 ## Supported formats and targeted structures
 
-PrivMeta removes the structures listed below. “Supported” does not mean that
+ZeroMeta removes the structures listed below. “Supported” does not mean that
 every possible private value in every valid or damaged file can be detected.
 
 | Format | Removed or neutralised | Preserved / important limits |
@@ -31,7 +31,7 @@ every possible private value in every valid or damaged file can be detected.
 | WebP | Browser raster decode/re-encode, then EXIF/XMP/ICC chunk removal | Intended for static WebP. Animated WebP is not guaranteed to remain animated. |
 | GIF | Comment extensions, XMP and non-rendering application extensions | Frames, timing, loop data and palette are copied without re-encoding. |
 | PDF | Document Info fields, catalog XMP Metadata reference, trailer ID | Pages are reserialised. Visible text, annotations, forms, attachments and other document content are not redacted or inspected for personal information. |
-| DOCX | `docProps/`; author/account attributes in Word XML; revision dates, durable IDs and `rsid` values | Visible document text, comment text and tracked-change markup are preserved. PrivMeta does not accept/reject tracked changes or delete comments. Other embedded files are not semantically inspected. |
+| DOCX | `docProps/`; author/account attributes in Word XML; revision dates, durable IDs and `rsid` values | Visible document text, comment text and tracked-change markup are preserved. ZeroMeta does not accept/reject tracked changes or delete comments. Other embedded files are not semantically inspected. |
 | MP4, MOV, M4A | `udta`/`meta` boxes, creation/modification timestamps, Apple `meta` tracks and their sample payloads | Audio/video samples and box offsets are preserved. Classic and fragmented files are supported, including common movie-fragment-relative and explicit base addressing. Ambiguous metadata-track layouts fail safely. |
 | WebM, MKV | Tags, Chapters, Attachments, writing/muxing app, track name and language | Encoded clusters are preserved. Known-size and schema-valid unknown-size live clusters are supported; other unknown-size layouts fail safely. |
 | MP3 | Leading ID3v2 and conventional trailing ID3v1, ID3v1 Extended and APEv2 tags | MPEG audio frames are preserved. Tags in unusual locations are not guessed at. |
@@ -45,7 +45,7 @@ currently accepted.
 ## Failure behaviour
 
 Container parsers validate lengths, offsets, sample tables and relevant schema
-before mutation. When PrivMeta cannot establish safe bounds for a supported
+before mutation. When ZeroMeta cannot establish safe bounds for a supported
 file, it returns a failure in the UI instead of producing a guessed or partly
 corrupted output. A successful result means the targeted structures were
 processed; it is not a proof that the file contains no unknown metadata.

@@ -10,20 +10,20 @@ How to remove metadata from a Word document is simpler than most people expect. 
 
 ## How to Remove Metadata from a Word Document in Your Browser
 
-This method works on Mac, Windows, Chromebook, and other devices with a compatible browser. [PrivMeta](/) removes documented property and identity structures from your `.docx` file locally in your browser. The document bytes are not uploaded to a processing server.
+This method works on Mac, Windows, Chromebook, and other devices with a compatible browser. [ZeroMeta](/) removes documented property and identity structures from your `.docx` file locally in your browser. The document bytes are not uploaded to a processing server.
 
-1. Go to [PrivMeta](/)
+1. Go to [ZeroMeta](/)
 2. Drop your `.docx` file into the upload area
 3. Click **Remove metadata**
 4. Download the cleaned file
 
-The DOCX package is rebuilt while preserving its document parts. PrivMeta removes the `docProps/` folder and anonymises author/account attributes, revision dates and revision-session IDs throughout Word XML.
+The DOCX package is rebuilt while preserving its document parts. ZeroMeta removes the `docProps/` folder and anonymises author/account attributes, revision dates and revision-session IDs throughout Word XML.
 
-PrivMeta deliberately preserves visible comment text and tracked-change markup; it clears their author identities and dates rather than deleting editorial content. If you want comments gone or changes permanently accepted/rejected, do that in Word or another document editor before sharing.
+ZeroMeta deliberately preserves visible comment text and tracked-change markup; it clears their author identities and dates rather than deleting editorial content. If you want comments gone or changes permanently accepted/rejected, do that in Word or another document editor before sharing.
 
 ## How to Remove Metadata from Word on Mac
 
-On a Mac, you can use PrivMeta in Safari (the method above), or use Word's built-in tools.
+On a Mac, you can use ZeroMeta in Safari (the method above), or use Word's built-in tools.
 
 **Using Document Inspector in Word for Mac:**
 
@@ -34,7 +34,7 @@ On a Mac, you can use PrivMeta in Safari (the method above), or use Word's built
 5. Click **Inspect**, then **Remove All** next to any categories with results
 6. Save the document
 
-The coverage of Word's built-in tools varies by version. PrivMeta provides a consistent documented target: package properties plus identity and revision-session attributes in Word XML. It does not claim to inspect the semantics of every embedded object or custom extension.
+The coverage of Word's built-in tools varies by version. ZeroMeta provides a consistent documented target: package properties plus identity and revision-session attributes in Word XML. It does not claim to inspect the semantics of every embedded object or custom extension.
 
 ## How to Remove Metadata from Word on Windows
 
@@ -48,7 +48,7 @@ Windows users have access to Word's Document Inspector, which is more thorough t
 6. Click **Remove All** next to any categories showing results
 7. Save the document
 
-Word's inspector can remove common properties and can also offer separate controls for comments and tracked changes. PrivMeta is useful for consistently clearing package properties and author identities, but neither tool should be described as a universal guarantee for arbitrary embedded objects.
+Word's inspector can remove common properties and can also offer separate controls for comments and tracked changes. ZeroMeta is useful for consistently clearing package properties and author identities, but neither tool should be described as a universal guarantee for arbitrary embedded objects.
 
 ## What Metadata Does a Word Document Contain?
 
@@ -68,7 +68,7 @@ A DOCX file is a ZIP archive containing multiple XML files. Three of these store
 
 **Company Name** comes from the Office installation. A corporate licence means your organisation's name is embedded in every document you create. Sharing documents externally exposes this without any visible indication in the document itself.
 
-**Tracked changes and comments** are stored separately from package properties. PrivMeta preserves their text and markup so cleaning does not silently change the editorial state, but removes recognised author/account attributes, dates and revision-session IDs. Accept all changes and delete comments manually if their content itself is sensitive.
+**Tracked changes and comments** are stored separately from package properties. ZeroMeta preserves their text and markup so cleaning does not silently change the editorial state, but removes recognised author/account attributes, dates and revision-session IDs. Accept all changes and delete comments manually if their content itself is sensitive.
 
 ### Why this has caused real problems
 
@@ -78,6 +78,6 @@ The risk is not dramatic in everyday situations. But the fix is quick and free, 
 
 ## Remove the Metadata Before You Send
 
-A useful precaution is to remove targeted document properties before the document leaves your device, then review the visible text, comments, tracked changes, embedded objects and filename yourself. [PrivMeta cleans documented Word metadata structures](/) in the browser without a file upload or account.
+A useful precaution is to remove targeted document properties before the document leaves your device, then review the visible text, comments, tracked changes, embedded objects and filename yourself. [ZeroMeta cleans documented Word metadata structures](/) in the browser without a file upload or account.
 
 If you also work with PDFs, see our guide on [removing metadata from a PDF](/blog/remove-metadata-from-pdf-guide) for the same in-browser process.

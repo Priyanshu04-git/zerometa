@@ -1,6 +1,9 @@
 {
-  "name": "PrivMeta",
-  "short_name": "PrivMeta",
+  "name": "ZeroMeta",
+  "short_name": "ZeroMeta",
+  "description": "Local-first metadata cleaning and evidence reports for supported files.",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +18,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#17201d",
+  "background_color": "#f2f4f1",
   "display": "standalone"
 }

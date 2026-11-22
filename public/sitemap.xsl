@@ -8,7 +8,7 @@
 <xsl:template match="/">
   <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>XML Sitemap - PrivMeta</title>
+    <title>XML Sitemap - ZeroMeta</title>
     <style>
       body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
       h1 { font-size: 24px; margin-bottom: 20px; }
@@ -22,7 +22,7 @@
     </style>
   </head>
   <body>
-    <h1>XML Sitemap - PrivMeta</h1>
+    <h1>XML Sitemap - ZeroMeta</h1>
     <div class="url-count">Total URLs: <xsl:value-of select="count(sm:urlset/sm:url)" /></div>
     <table>
       <thead>

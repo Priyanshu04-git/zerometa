@@ -1,26 +1,19 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
-import { File as FileIcon, X, Loader2, CheckCircle2, XCircle } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ClipboardPaste, File as FileIcon, FolderOpen, X, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import Typography from "./Typography";
-import {
-  MAX_FILE_SIZE_BYTES,
-  MAX_FILE_COUNT,
-  MAX_TOTAL_FILE_SIZE_MB,
-  ACCEPTED_FILE_TYPES,
-  getKindForFilename,
-  getTotalFileSizeBytes,
-} from "@/utils/constants";
+import { MAX_FILE_SIZE_BYTES, MAX_FILE_COUNT, MAX_TOTAL_FILE_SIZE_MB, ACCEPTED_FILE_TYPES, getKindForFilename, getTotalFileSizeBytes } from "@/utils/constants";
+import { toast } from "sonner";
 
 export type FileStatus = "idle" | "processing" | "done" | "failed";
-
-/** A queued file with a stable id, so statuses and list keys survive removals. */
 export type StoredFile = { id: string; file: File };
 
 type DropzoneProps = {
   fileStore: StoredFile[];
   fileStatuses: Record<string, FileStatus>;
+  fileErrors?: Record<string, string>;
   onFilesAccepted: (files: File[]) => void;
   onFileRemove: (id: string) => void;
   onError: (type: "unsupported_format" | "file_too_large" | "dropzone_error") => void;
@@ -30,164 +23,99 @@ type DropzoneProps = {
 const acceptedExtensions = Array.from(new Set(Object.values(ACCEPTED_FILE_TYPES).flatMap(({ extensions }) => extensions)));
 const acceptedExtensionsLabel = acceptedExtensions.map((ext) => ext.replace(/^\./, "").toUpperCase()).join(" · ");
 
-export default function Dropzone({ fileStore, fileStatuses, onFilesAccepted, onFileRemove, onError, processing }: DropzoneProps) {
+export default function Dropzone({ fileStore, fileStatuses, fileErrors = {}, onFilesAccepted, onFileRemove, onError, processing }: DropzoneProps) {
   const [highlight, setHighlight] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const isAcceptedType = (file: File) => getKindForFilename(file.name) !== undefined;
-  const isAcceptedSize = (file: File) => file.size <= MAX_FILE_SIZE_BYTES;
   const queuedSizeMb = getTotalFileSizeBytes(fileStore.map(({ file }) => file)) / (1024 * 1024);
 
-  const handleFiles = useCallback(
-    (files: FileList | File[]) => {
-      try {
-        const fileArray = Array.from(files); // Normalize FileList or File[] to a true array
-        const newFiles: File[] = [];
-
-        for (const file of fileArray) {
-          if (!isAcceptedType(file)) {
-            onError("unsupported_format");
-            return;
-          }
-
-          if (!isAcceptedSize(file)) {
-            onError("file_too_large");
-            return;
-          }
-
-          newFiles.push(file);
+  const handleFiles = useCallback((files: FileList | File[]) => {
+    try {
+      const newFiles: File[] = [];
+      let reportedInvalid = false;
+      for (const file of Array.from(files)) {
+        if (getKindForFilename(file.name) === undefined) {
+          if (!reportedInvalid) onError("unsupported_format");
+          reportedInvalid = true;
+          continue;
         }
-
-        if (newFiles.length > 0) {
-          onFilesAccepted(newFiles);
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+          if (!reportedInvalid) onError("file_too_large");
+          reportedInvalid = true;
+          continue;
         }
-
-        if (fileInputRef.current) fileInputRef.current.value = "";
-      } catch (error) {
-        console.error(error);
-        onError("dropzone_error");
+        newFiles.push(file);
       }
-    },
-    [onError, onFilesAccepted],
-  );
-
-  const handleDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
-      try {
-        e.preventDefault();
-        setHighlight(false);
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-          handleFiles(e.dataTransfer.files);
-          e.dataTransfer.clearData();
-        }
-      } catch (error) {
-        console.error(error);
-        onError("dropzone_error");
+      if (newFiles.length > 0) onFilesAccepted(newFiles);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+        fileInputRef.current.removeAttribute("webkitdirectory");
+        fileInputRef.current.removeAttribute("directory");
       }
-    },
-    [onError, handleFiles],
-  );
+    } catch (error) {
+      console.error(error);
+      onError("dropzone_error");
+    }
+  }, [onError, onFilesAccepted]);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      try {
-        if (e.target.files) handleFiles(e.target.files);
-      } catch (error) {
-        console.error(error);
-        onError("dropzone_error");
+  useEffect(() => {
+    const handlePaste = (event: ClipboardEvent) => {
+      if (processing) return;
+      const files = event.clipboardData?.files;
+      if (files && files.length > 0) {
+        event.preventDefault();
+        handleFiles(files);
       }
-    },
-    [onError, handleFiles],
-  );
+    };
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, [handleFiles, processing]);
 
   const openFilePicker = () => {
-    if (!processing && fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    if (processing) return;
+    fileInputRef.current?.removeAttribute("webkitdirectory");
+    fileInputRef.current?.removeAttribute("directory");
+    fileInputRef.current?.click();
+  };
+  const openFolderPicker = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (processing) return;
+    fileInputRef.current?.setAttribute("webkitdirectory", "");
+    fileInputRef.current?.setAttribute("directory", "");
+    fileInputRef.current?.click();
   };
 
   return (
     <div className="w-full flex flex-col gap-(--space-md)">
-      <Typography variant="legal" muted className="hidden sm:inline">
-        {acceptedExtensionsLabel}
-      </Typography>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+        <span>{acceptedExtensionsLabel}</span>
+        <span>Up to {MAX_FILE_COUNT} files · {MAX_TOTAL_FILE_SIZE_MB} MB total</span>
+      </div>
       <div
         role="button"
         tabIndex={0}
-        aria-label="Add files: drag and drop, or activate to browse"
+        aria-label="Add files: drag and drop, paste, or activate to browse"
         aria-disabled={processing}
-        className={`relative flex flex-col items-center justify-center w-full min-h-72 sm:min-h-84 md:min-h-96 p-(--space-3xl) gap-(--space-lg) border-3 border-dashed rounded-sm transition-colors ${
-          highlight ? "border-(--accent-primary) bg-(--accent-secondary)" : "border-foreground"
-        } ${processing ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+        className={`relative flex min-h-80 flex-col items-center justify-center gap-5 overflow-hidden rounded-3xl border-2 border-dashed p-(--space-3xl) transition-all ${highlight ? "border-(--accent-primary) bg-(--accent-secondary) shadow-[0_0_0_5px_color-mix(in_srgb,var(--accent-primary)_16%,transparent)]" : "border-border bg-card/80"} ${processing ? "cursor-not-allowed opacity-70" : "cursor-pointer hover:border-(--accent-primary) hover:bg-card"}`}
         onClick={openFilePicker}
-        onKeyDown={(e) => {
-          // Ignore key events bubbling up from the per-file remove buttons
-          if (e.target !== e.currentTarget) return;
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            openFilePicker();
-          }
-        }}
-        onDragOver={(e) => {
-          if (!processing) {
-            e.preventDefault();
-            setHighlight(true);
-          }
-        }}
-        onDragLeave={() => {
-          if (!processing) setHighlight(false);
-        }}
-        onDrop={(e) => {
-          if (!processing) handleDrop(e);
-        }}
+        onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); openFilePicker(); } }}
+        onDragOver={(event) => { if (!processing) { event.preventDefault(); setHighlight(true); } }}
+        onDragLeave={() => { if (!processing) setHighlight(false); }}
+        onDrop={(event) => { if (!processing) { event.preventDefault(); setHighlight(false); handleFiles(event.dataTransfer.files); event.dataTransfer.clearData(); } }}
       >
-        <input ref={fileInputRef} type="file" multiple accept={acceptedExtensions.join(",")} onChange={handleChange} className="hidden" />
-        <div className="flex flex-col items-center gap-6 text-foreground">
-          <div className="flex flex-col items-center text-center leading-tight">
-            <Typography as="p" variant="label" className="leading-tight">
-              Drag & drop files
-            </Typography>
-            <Typography as="p" variant="label" className="leading-tight">
-              or{" "}
-              <Typography as="span" variant="label" weight={600} className="hover:underline text-(--accent-primary)">
-                click to add
-              </Typography>
-            </Typography>
-          </div>
+        <input ref={fileInputRef} type="file" multiple accept={acceptedExtensions.join(",")} onChange={(event) => event.target.files && handleFiles(event.target.files)} className="hidden" aria-hidden="true" />
+        <div className="flex size-16 items-center justify-center rounded-2xl bg-(--accent-secondary) text-(--accent-primary)"><FileIcon size={30} strokeWidth={1.8} /></div>
+        <div className="flex flex-col items-center text-center leading-tight"><Typography as="p" variant="label" className="leading-tight">Drop files here</Typography><Typography as="p" variant="bodySm" muted className="mt-2">or click to browse · paste an image/file from your clipboard</Typography></div>
+        <div className="flex flex-wrap justify-center gap-2" onClick={(event) => event.stopPropagation()}>
+          <Button type="button" variant="outline" size="sm" disabled={processing} onClick={openFolderPicker}><FolderOpen className="mr-2 size-4" /> Choose folder</Button>
+          <Button type="button" variant="ghost" size="sm" disabled={processing} onClick={() => toast.info("Paste a file with Ctrl/Cmd + V while this page is focused")}><ClipboardPaste className="mr-2 size-4" /> Paste from clipboard</Button>
         </div>
-        {fileStore.length > 0 && (
-          <ul className="w-full max-w-lg flex flex-col gap-(--space-sm) text-left text-sm font-bold text-muted-foreground">
-            {fileStore.map(({ id, file }) => {
-              const status = fileStatuses[id] ?? "idle";
-              return (
-                <li key={id} className="truncate flex items-center gap-(--space-lg)">
-                  <FileIcon className=" shrink-0" size={20} strokeWidth={2} />
-                  <Typography as="p" variant="bodySm" weight={500} muted className="truncate flex-1">
-                    {file.name}
-                  </Typography>
-                  {status === "processing" && <Loader2 className="shrink-0 size-5 animate-spin text-muted-foreground" />}
-                  {status === "done" && <CheckCircle2 className="shrink-0 size-5 text-green-500" />}
-                  {status === "failed" && <XCircle className="shrink-0 size-5 text-red-500" />}
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onFileRemove(id);
-                    }}
-                    variant="ghost"
-                    size="icon"
-                    disabled={processing}
-                    aria-label={`Remove ${file.name}`}
-                  >
-                    <X />
-                  </Button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-        <Typography as="p" variant="bodySm" weight={500} muted className="absolute right-(--space-xl) bottom-(--space-md)">
-          {`${fileStore.length}/${MAX_FILE_COUNT} files · ${queuedSizeMb.toFixed(1)}/${MAX_TOTAL_FILE_SIZE_MB} MB`}
-        </Typography>
+        {fileStore.length > 0 && <ul className="w-full max-w-2xl space-y-2 text-left" aria-label="Queued files">{fileStore.map(({ id, file }) => {
+          const status = fileStatuses[id] ?? "idle";
+          return <li key={id} className="rounded-xl border border-border/80 bg-background/70 p-3"><div className="flex items-center gap-3"><FileIcon className="size-5 shrink-0 text-(--accent-primary)" /><div className="min-w-0 flex-1"><Typography as="p" variant="bodySm" weight={500} className="truncate">{file.name}</Typography>{fileErrors[id] && <p className="mt-1 text-xs text-rose-600 dark:text-rose-300">{fileErrors[id]}</p>}</div>{status === "processing" && <Loader2 className="size-5 shrink-0 animate-spin text-(--accent-primary)" aria-label="Processing" />}{status === "done" && <CheckCircle2 className="size-5 shrink-0 text-emerald-500" aria-label="Complete" />}{status === "failed" && <XCircle className="size-5 shrink-0 text-rose-500" aria-label="Failed" />}<Button onClick={(event) => { event.stopPropagation(); onFileRemove(id); }} variant="ghost" size="icon" disabled={processing} aria-label={`Remove ${file.name}`}><X /></Button></div></li>;
+        })}</ul>}
+        <Typography as="p" variant="bodySm" weight={500} muted className="absolute bottom-(--space-md) right-(--space-xl)">{`${fileStore.length}/${MAX_FILE_COUNT} files · ${queuedSizeMb.toFixed(1)}/${MAX_TOTAL_FILE_SIZE_MB} MB`}</Typography>
+        <p className="sr-only" aria-live="polite">{processing ? "Processing files locally" : `${fileStore.length} files queued`}</p>
       </div>
     </div>
   );

@@ -64,11 +64,11 @@ Record the client, operating system, upload method, file format, and test date. 
 
 ## Remove Metadata Before Uploading to Discord
 
-[PrivMeta](/) removes the EXIF, XMP, IPTC and comment structures targeted by its image cleaners in your browser. Photo bytes are not uploaded to a processing server.
+[ZeroMeta](/) removes the EXIF, XMP, IPTC and comment structures targeted by its image cleaners in your browser. Photo bytes are not uploaded to a processing server.
 
 **Supported formats:** JPEG, JPG, PNG, WEBP, and GIF
 
-1. Open [PrivMeta](/).
+1. Open [ZeroMeta](/).
 2. Add the photo.
 3. Select **Remove metadata**.
 4. Download the cleaned file.
@@ -84,4 +84,4 @@ Removing file metadata does not hide information visible in the picture. Faces, 
 
 Do not ask whether Discord will clean a sensitive original after you send it. Clean and inspect the copy first, while the file is still under your control.
 
-[Remove documented photo metadata with PrivMeta](/) before your next upload. No account or file-processing upload is required.
+[Remove documented photo metadata with ZeroMeta](/) before your next upload. No account or file-processing upload is required.

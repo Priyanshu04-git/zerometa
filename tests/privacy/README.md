@@ -1,6 +1,6 @@
-# PrivMeta privacy regression harness
+# ZeroMeta privacy regression harness
 
-This suite sends each fixture through the real PrivMeta browser UI, downloads
+This suite sends each fixture through the real ZeroMeta browser UI, downloads
 the cleaned file, compares before/after metadata with ExifTool, scans for raw
 sentinel strings, and checks that important technical properties survive.
 
@@ -57,7 +57,7 @@ become a new input.
 An external fixture collection can be used without copying it into the repo:
 
 ```powershell
-$env:PRIVMETA_FIXTURES_DIR="C:\Users\you\PrivMetaFixtures"
+$env:PRIVMETA_FIXTURES_DIR="C:\Users\you\ZeroMetaFixtures"
 npm run privacy:test
 ```
 

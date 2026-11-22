@@ -7,15 +7,15 @@ updated: "2026-08-29"
 
 Photos can reveal more than the image itself. A file may also contain GPS coordinates, the phone or camera model, capture time, editing software, creator details, and a small embedded preview. This hidden information can travel with the photo when it is emailed, uploaded, or shared as a file.
 
-This guide explains how to remove the documented metadata structures PrivMeta recognises while keeping the visible photo on your device.
+This guide explains how to remove the documented metadata structures ZeroMeta recognises while keeping the visible photo on your device.
 
 ## How to Remove Metadata from Photos in Your Browser
 
-[PrivMeta](/) removes targeted EXIF, XMP, IPTC and comment structures locally in a compatible browser. Photo bytes are not uploaded to a processing server.
+[ZeroMeta](/) removes targeted EXIF, XMP, IPTC and comment structures locally in a compatible browser. Photo bytes are not uploaded to a processing server.
 
 **Supported formats:** JPEG, JPG, PNG, WEBP, and GIF
 
-1. Open [PrivMeta's free metadata remover](/).
+1. Open [ZeroMeta's free metadata remover](/).
 2. Add one or more photos.
 3. Select **Remove metadata**.
 4. Download the cleaned files.
@@ -41,15 +41,15 @@ For a deeper explanation of these fields, see [what EXIF data is and what it can
 
 Location coordinates stored in EXIF are commonly called a geotag. If a geotag is preserved, a recipient can extract the latitude and longitude with ordinary metadata-inspection software.
 
-PrivMeta's JPEG cleaner removes the targeted EXIF segment containing standard GPS fields. Its supported static PNG and WebP cleaners re-encode the visible raster in the browser, producing a new file without the original ancillary metadata structures. GIF comments, plain-text extensions, XMP application data, and other non-animation application extensions are removed while animation data is preserved.
+ZeroMeta's JPEG cleaner removes the targeted EXIF segment containing standard GPS fields. Its supported static PNG and WebP cleaners re-encode the visible raster in the browser, producing a new file without the original ancillary metadata structures. GIF comments, plain-text extensions, XMP application data, and other non-animation application extensions are removed while animation data is preserved.
 
 Cleaning the file before sharing is different from relying on a destination platform to clean it later: the metadata is removed before the file leaves your device.
 
 ## Removing Photo Metadata on iPhone or Android
 
-PrivMeta works in a compatible mobile browser without installing an app:
+ZeroMeta works in a compatible mobile browser without installing an app:
 
-1. Open [PrivMeta](/) in Safari, Chrome, or another compatible browser.
+1. Open [ZeroMeta](/) in Safari, Chrome, or another compatible browser.
 2. Tap the file area and choose the photo.
 3. Select **Remove metadata**.
 4. Save the cleaned result.
@@ -66,7 +66,7 @@ Operating systems also include metadata controls, but their coverage varies by f
 
 The answer depends on the image format.
 
-**JPEG and JPG:** PrivMeta removes recognised metadata segments without decoding or recompressing the image. The encoded image data is copied, so image quality is preserved.
+**JPEG and JPG:** ZeroMeta removes recognised metadata segments without decoding or recompressing the image. The encoded image data is copied, so image quality is preserved.
 
 **Static PNG and WebP:** These formats are decoded and raster re-encoded by the browser. Dimensions and visible content are preserved, but byte-for-byte pixel data, colour profiles, and exact encoding are not claimed to be identical.
 
@@ -91,8 +91,8 @@ Some services transform images and commonly omit metadata from the delivered cop
 
 Metadata cleaning does not remove information that is visible in the image. Faces, addresses, documents, reflections, vehicle registrations, landmarks, and other visual details still require review. The filename may also reveal information and should be checked separately.
 
-No cleaner can safely promise to recognise every private or application-specific structure in every file. PrivMeta targets documented structures for its supported formats and fails unsupported cases rather than presenting an unverified universal guarantee.
+No cleaner can safely promise to recognise every private or application-specific structure in every file. ZeroMeta targets documented structures for its supported formats and fails unsupported cases rather than presenting an unverified universal guarantee.
 
 ## Clean the Photo Before You Share It
 
-[Remove metadata from supported photos with PrivMeta](/) before sending or uploading them. Cleaning runs in your browser, requires no account, and does not upload the photo to a processing server.
+[Remove metadata from supported photos with ZeroMeta](/) before sending or uploading them. Cleaning runs in your browser, requires no account, and does not upload the photo to a processing server.

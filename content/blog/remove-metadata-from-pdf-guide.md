@@ -10,16 +10,16 @@ Remove metadata from a PDF before sending it and that hidden information stays p
 
 ## How to Remove Metadata from a PDF in Your Browser
 
-[PrivMeta](/) removes standard PDF properties, XMP and the trailer identifier directly in your browser without uploading the file for processing.
+[ZeroMeta](/) removes standard PDF properties, XMP and the trailer identifier directly in your browser without uploading the file for processing.
 
-1. Go to [PrivMeta](/)
+1. Go to [ZeroMeta](/)
 2. Drop your PDF into the upload area
 3. Click **Remove metadata**
 4. Download the cleaned file
 
 The document's text, images, and layout are completely untouched. Only the hidden metadata is removed. The process takes a few seconds and requires no software installation or account.
 
-PrivMeta removes the standard Info dictionary fields, the catalog XMP Metadata reference, and the trailer ID. It does not redact visible text or inspect annotations, forms, attachments, and arbitrary application-specific content for personal information.
+ZeroMeta removes the standard Info dictionary fields, the catalog XMP Metadata reference, and the trailer ID. It does not redact visible text or inspect annotations, forms, attachments, and arbitrary application-specific content for personal information.
 
 ## What Metadata Does a PDF Contain?
 
@@ -67,7 +67,7 @@ File size decreases slightly because the metadata fields are no longer present, 
 
 ## Remove PDF Metadata Before You Share
 
-One client-side option is to [clean standard PDF metadata with PrivMeta](/) before the file is shared. It requires no file-processing upload, account, or software installation. Review visible text, annotations, forms, attachments and the filename separately.
+One client-side option is to [clean standard PDF metadata with ZeroMeta](/) before the file is shared. It requires no file-processing upload, account, or software installation. Review visible text, annotations, forms, attachments and the filename separately.
 
 If you also work with Word documents, see our guide on [removing metadata from a Word document](/blog/remove-metadata-from-word-document) for the same in-browser process.
 

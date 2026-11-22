@@ -33,27 +33,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!post) {
     return {
-      title: "Post Not Found | PrivMeta Blog",
+      title: "Post Not Found | ZeroMeta Blog",
       description: "The requested blog post could not be found.",
       robots: { index: false, follow: false },
     };
   }
 
-  const url = `https://www.privmeta.com/blog/${slug}`;
+  const url = `https://privmeta-n4x4wqum.manus.space/blog/${slug}`;
 
   return {
-    title: `${post.title} | PrivMeta`,
+    title: `${post.title} | ZeroMeta`,
     description: post.description,
     alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description: post.description,
       url,
-      siteName: "PrivMeta",
+      siteName: "ZeroMeta",
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated || post.date,
-      authors: ["PrivMeta"],
+      authors: ["ZeroMeta"],
       images: [{ url: "/og-image.png", width: 1200, height: 628, alt: post.title }],
     },
     twitter: {
@@ -73,7 +73,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  const url = `https://www.privmeta.com/blog/${slug}`;
+  const url = `https://privmeta-n4x4wqum.manus.space/blog/${slug}`;
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -83,8 +83,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     datePublished: post.date,
     dateModified: post.updated || post.date,
     url,
-    author: { "@type": "Organization", name: "PrivMeta", url: "https://www.privmeta.com/" },
-    publisher: { "@type": "Organization", name: "PrivMeta", url: "https://www.privmeta.com/" },
+    author: { "@type": "Organization", name: "ZeroMeta", url: "https://privmeta-n4x4wqum.manus.space/" },
+    publisher: { "@type": "Organization", name: "ZeroMeta", url: "https://privmeta-n4x4wqum.manus.space/" },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
   };
 
@@ -92,8 +92,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.privmeta.com/" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.privmeta.com/blog" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://privmeta-n4x4wqum.manus.space/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://privmeta-n4x4wqum.manus.space/blog" },
       { "@type": "ListItem", position: 3, name: post.title, item: url },
     ],
   };

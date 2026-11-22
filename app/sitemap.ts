@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/blog";
 export const dynamic = "error"; // 👈 Force static generation (no runtime)
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.privmeta.com";
+  const baseUrl = "https://privmeta-n4x4wqum.manus.space";
 
   // Read blog slugs at build time
   let blogPosts: MetadataRoute.Sitemap = [];

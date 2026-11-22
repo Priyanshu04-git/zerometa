@@ -36,11 +36,11 @@ When you share files online, you're revealing far more than the visible content.
 
 | File Type | Common Metadata Risks                                  | Removal Method                  |
 | --------- | ------------------------------------------------------ | ------------------------------- |
-| Photos    | GPS coordinates, Camera model, Facial recognition data | PrivMeta's EXIF cleaner         |
-| DOCX      | Package properties, author identities, revision IDs    | PrivMeta's DOCX sanitizer       |
-| PDFs      | Info properties, XMP, persistent document ID           | PrivMeta's PDF metadata remover |
-| Videos    | Location, device/software tags, creation timestamps    | PrivMeta's container cleaners   |
-| Audio     | Conventional tags, artwork, broadcast-origin fields    | PrivMeta's audio format parsers |
+| Photos    | GPS coordinates, Camera model, Facial recognition data | ZeroMeta's EXIF cleaner         |
+| DOCX      | Package properties, author identities, revision IDs    | ZeroMeta's DOCX sanitizer       |
+| PDFs      | Info properties, XMP, persistent document ID           | ZeroMeta's PDF metadata remover |
+| Videos    | Location, device/software tags, creation timestamps    | ZeroMeta's container cleaners   |
+| Audio     | Conventional tags, artwork, broadcast-origin fields    | ZeroMeta's audio format parsers |
 
 ## The Privacy Cascade Effect
 
@@ -54,9 +54,9 @@ A single file with metadata can trigger an exposure chain reaction:
 
 > "Metadata is the digital fingerprint you leave on everything you touch online."
 
-## PrivMeta: Your Local Privacy Shield
+## ZeroMeta: Your Local Privacy Shield
 
-PrivMeta reduces this exposure by cleaning documented metadata structures before sharing:
+ZeroMeta reduces this exposure by cleaning documented metadata structures before sharing:
 
 1. **Client-Side File Processing**
 
@@ -90,10 +90,10 @@ Cloud-based metadata removal tools create new privacy risks:
 - Processing logs become new metadata trails
 - Service providers can access your content
 
-PrivMeta keeps file cleaning on your device: no file-processing upload or server-side file storage. Ordinary website asset and operational-telemetry requests are separate and do not receive file contents or file names.
+ZeroMeta keeps file cleaning on your device: no file-processing upload or server-side file storage. Ordinary website asset and operational-telemetry requests are separate and do not receive file contents or file names.
 
 ## Strip Metadata Before You Share
 
-[PrivMeta](/) supports documented image, PDF, DOCX, MP4/MOV, Matroska, MP3/AAC, FLAC and WAV structures, all processed locally in your browser. Review the cleaned output and remember that visible content, filenames and unknown application-specific data are outside a universal metadata guarantee.
+[ZeroMeta](/) supports documented image, PDF, DOCX, MP4/MOV, Matroska, MP3/AAC, FLAC and WAV structures, all processed locally in your browser. Review the cleaned output and remember that visible content, filenames and unknown application-specific data are outside a universal metadata guarantee.
 
 [Remove Metadata Now](/)

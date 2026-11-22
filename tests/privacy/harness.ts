@@ -451,7 +451,7 @@ export function writeReports(results: PrivacyResult[], outputDirectory: string):
       `| ${result.status.toUpperCase()} | ${result.id.replaceAll("|", "\\|")} | ${result.removedTagCount} | ${result.errors.length} | ${result.warnings.length} |`,
   );
   const markdown = [
-    "# PrivMeta privacy test report",
+    "# ZeroMeta privacy test report",
     "",
     `Generated: ${new Date().toISOString()}`,
     "",
@@ -478,6 +478,6 @@ export function writeReports(results: PrivacyResult[], outputDirectory: string):
       (result) => `<section><h2>${escapeHtml(result.id)}</h2>${result.errors.map((value) => `<p class="fail">Error: ${escapeHtml(value)}</p>`).join("")}${result.warnings.map((value) => `<p class="warn">Warning: ${escapeHtml(value)}</p>`).join("")}</section>`,
     )
     .join("\n");
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>PrivMeta privacy report</title><style>body{font:15px system-ui;max-width:1100px;margin:40px auto;padding:0 20px}table{border-collapse:collapse;width:100%}th,td{padding:8px;border:1px solid #ccc;text-align:left}.pass{color:#087830}.warn{color:#956400}.fail{color:#b42318}section{border-top:1px solid #ddd;margin-top:24px}</style></head><body><h1>PrivMeta privacy test report</h1><p>Generated ${escapeHtml(new Date().toISOString())}</p><table><thead><tr><th>Status</th><th>Fixture</th><th>Removed tags</th><th>Errors</th><th>Warnings</th></tr></thead><tbody>${rows}</tbody></table>${details}</body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>ZeroMeta privacy report</title><style>body{font:15px system-ui;max-width:1100px;margin:40px auto;padding:0 20px}table{border-collapse:collapse;width:100%}th,td{padding:8px;border:1px solid #ccc;text-align:left}.pass{color:#087830}.warn{color:#956400}.fail{color:#b42318}section{border-top:1px solid #ddd;margin-top:24px}</style></head><body><h1>ZeroMeta privacy test report</h1><p>Generated ${escapeHtml(new Date().toISOString())}</p><table><thead><tr><th>Status</th><th>Fixture</th><th>Removed tags</th><th>Errors</th><th>Warnings</th></tr></thead><tbody>${rows}</tbody></table>${details}</body></html>`;
   fs.writeFileSync(path.join(outputDirectory, "report.html"), html);
 }

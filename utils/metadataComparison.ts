@@ -1,7 +1,8 @@
+import ExifReader, { type ExpandedTags } from "exifreader";
 import JSZip from "jszip";
 import { PDFDocument, PDFName } from "pdf-lib";
 import { getKindForFilename, type FileKind } from "./constants";
-import { stripContainerMetadata } from "./stripContainerMetadata";
+import { assessMetadataField, type MetadataCategory, type MetadataRisk } from "./metadataRisk";
 
 export type MetadataStatus = "removed" | "present" | "not-detected";
 
@@ -10,6 +11,9 @@ export type MetadataField = {
   original?: string;
   cleaned?: string;
   status: MetadataStatus;
+  category: MetadataCategory;
+  risk: MetadataRisk;
+  explanation: string;
 };
 
 export type MetadataComparison = {
@@ -26,10 +30,46 @@ export type MetadataComparison = {
 
 type Detected = Record<string, string>;
 
+const OMIT_KEYS = new Set(["FileType", "Image Width", "Image Height", "Bits Per Sample", "Color Components", "Subsampling"]);
+const MAX_VALUE_LENGTH = 180;
+
+function displayValue(value: unknown): string {
+  if (typeof value === "string") return value.slice(0, MAX_VALUE_LENGTH);
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.map((item) => displayValue(item)).join(", ").slice(0, MAX_VALUE_LENGTH);
+  return "detected";
+}
+
+function tagValue(tag: unknown): string {
+  if (!tag || typeof tag !== "object") return displayValue(tag);
+  const record = tag as { description?: unknown; value?: unknown };
+  return displayValue(record.description ?? record.value ?? "detected");
+}
+
+function flattenExifTags(tags: ExpandedTags): Detected {
+  const result: Detected = {};
+  const groups = ["exif", "iptc", "xmp", "gps", "photoshop", "makerNotes"] as const;
+  for (const group of groups) {
+    const section = tags[group] as Record<string, unknown> | undefined;
+    if (!section) continue;
+    for (const [name, tag] of Object.entries(section)) {
+      if (name === "_raw" || OMIT_KEYS.has(name)) continue;
+      result[`${group}.${name}`] = tagValue(tag);
+    }
+  }
+  return result;
+}
+
 async function inspectImage(file: File): Promise<Detected> {
   const bytes = new Uint8Array(await file.arrayBuffer());
   const extension = file.name.split(".").pop()?.toLowerCase();
-  return extension === "jpg" || extension === "jpeg" ? inspectJpegStructure(bytes) : extension === "png" ? inspectPngStructure(bytes) : extension === "gif" ? inspectGifStructure(bytes) : inspectWebpStructure(bytes);
+  const structure = extension === "jpg" || extension === "jpeg" ? inspectJpegStructure(bytes) : extension === "png" ? inspectPngStructure(bytes) : extension === "gif" ? inspectGifStructure(bytes) : inspectWebpStructure(bytes);
+  try {
+    const tags = await ExifReader.load(bytes, { expanded: true, async: true, includeUnknown: false });
+    return { ...structure, ...flattenExifTags(tags) };
+  } catch {
+    return structure;
+  }
 }
 
 function textFromBytes(bytes: Uint8Array): string {
@@ -128,6 +168,20 @@ function inspectWebpStructure(bytes: Uint8Array): Detected {
   return result;
 }
 
+function addMarkerFields(text: string, markers: Array<[string, string]>, result: Detected) {
+  for (const [key, label] of markers) {
+    if (text.includes(key)) result[label] = "detected";
+  }
+}
+
+function hasBytes(bytes: Uint8Array, pattern: number[]): boolean {
+  outer: for (let i = 0; i <= bytes.length - pattern.length; i++) {
+    for (let j = 0; j < pattern.length; j++) if (bytes[i + j] !== pattern[j]) continue outer;
+    return true;
+  }
+  return false;
+}
+
 async function inspectPdf(file: File): Promise<Detected> {
   const result: Detected = {};
   const pdfDoc = await PDFDocument.load(await file.arrayBuffer(), { updateMetadata: false });
@@ -164,45 +218,91 @@ async function inspectDocx(file: File): Promise<Detected> {
       if (new RegExp(`(?:[>:])${field}(?:\\s|>)`, "i").test(xml)) result[`${label}.${field}`] = "detected";
     }
   }
-  // The cleaner also sanitizes identity-bearing data in WordprocessingML
-  // stories. Inspect the XML content directly, not ZIP bytes (rewriting a ZIP
-  // can change compression/timestamps without changing metadata).
-  for (const entry of Object.values(zip.files)) {
-    if (entry.dir || !/^word\/.*\.xml$/i.test(entry.name)) continue;
-    const xml = await entry.async("string");
-    if (/<[\w.-]+:rsids\b|\s(?:[\w.-]+:)?(?:author|initials|providerId|userId|personId|date(?:Utc)?|durableId|rsid[A-Za-z0-9_.-]*)\s*=/i.test(xml)) {
-      result["DOCX.Word XML identity fields"] = "detected";
-      break;
-    }
-  }
   return result;
+}
+
+function inspectIsoBmffBoxes(bytes: Uint8Array, result: Detected) {
+  const containers = new Set(["moov", "trak", "mdia", "minf", "stbl", "edts", "udta", "meta", "ilst", "dinf"]);
+  const walk = (start: number, end: number) => {
+    let offset = start;
+    while (offset + 8 <= end) {
+      const size32 = new DataView(bytes.buffer, bytes.byteOffset + offset, 4).getUint32(0);
+      const type = ascii(bytes, offset + 4, 4);
+      let headerSize = 8;
+      let boxSize = size32;
+      if (size32 === 1 && offset + 16 <= end) {
+        const high = new DataView(bytes.buffer, bytes.byteOffset + offset + 8, 4).getUint32(0);
+        const low = new DataView(bytes.buffer, bytes.byteOffset + offset + 12, 4).getUint32(0);
+        boxSize = high * 0x100000000 + low;
+        headerSize = 16;
+      } else if (size32 === 0) {
+        boxSize = end - offset;
+      }
+      if (boxSize < headerSize || offset + boxSize > end) return;
+      if (type === "udta") result["QuickTime.user-data"] = "present";
+      if (type === "meta") result["QuickTime.metadata-box"] = "present";
+      if (type === "uuid") result["QuickTime.uuid-metadata"] = "present";
+      if (containers.has(type)) walk(offset + headerSize + (type === "meta" ? 4 : 0), offset + boxSize);
+      offset += boxSize;
+    }
+  };
+  walk(0, bytes.length);
 }
 
 async function inspectContainer(file: File): Promise<Detected> {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const text = textFromBytes(bytes);
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
   const result: Detected = {};
-  const cleaned = await stripContainerMetadata(file);
-  if (cleaned && !await filesEqual(file, cleaned)) result[`${ext.toUpperCase()}.cleaner-targeted container metadata`] = "detected";
+  if (ext === "mp3" || ext === "aac") {
+    if (ascii(bytes, 0, 3) === "ID3") result["ID3.v2-tag"] = "present";
+    if (bytes.length >= 128 && ascii(bytes, bytes.length - 128, 3) === "TAG") result["ID3.v1-tag"] = "present";
+    if (hasBytes(bytes, Array.from(new TextEncoder().encode("APETAGEX")))) result["APE.v2-tag"] = "present";
+    addMarkerFields(text, [["TIT2", "ID3.title"], ["TPE1", "ID3.artist"], ["TALB", "ID3.album"], ["TDRC", "ID3.date"], ["COMM", "ID3.comment"], ["TXXX", "ID3.user-defined"], ["WXXX", "ID3.link"], ["GEOB", "ID3.embedded-object"], ["APIC", "ID3.picture"]], result);
+  } else if (ext === "wav") {
+    if (ascii(bytes, 0, 4) === "RIFF" && ascii(bytes, 8, 4) === "WAVE") {
+      let offset = 12;
+      while (offset + 8 <= bytes.length) {
+        const id = ascii(bytes, offset, 4);
+        const size = new DataView(bytes.buffer, bytes.byteOffset + offset + 4, 4).getUint32(0, true);
+        if (id === "LIST" && ascii(bytes, offset + 8, 4) === "INFO") result["RIFF.INFO-list"] = "present";
+        if (id === "bext") result["RIFF.broadcast-extension"] = "present";
+        if (id.toLowerCase() === "id3 ") result["RIFF.ID3-chunk"] = "present";
+        offset += 8 + size + (size & 1);
+      }
+    }
+  } else if (ext === "flac") {
+    if (ascii(bytes, 0, 4) === "fLaC") {
+      let offset = 4;
+      while (offset + 4 <= bytes.length) {
+        const header = bytes[offset];
+        const type = header & 0x7f;
+        const size = (bytes[offset + 1] << 16) | (bytes[offset + 2] << 8) | bytes[offset + 3];
+        const labels: Record<number, string> = { 1: "FLAC.padding", 2: "FLAC.application", 4: "FLAC.Vorbis-comment", 6: "FLAC.picture" };
+        if (labels[type]) result[labels[type]] = "present";
+        offset += 4 + size;
+        if (header & 0x80) break;
+      }
+    }
+  } else if (ext === "webm" || ext === "mkv") {
+    if (hasBytes(bytes, [0x12, 0x54, 0xc3, 0x67])) result["Matroska.tags"] = "present";
+    if (hasBytes(bytes, [0x10, 0x43, 0xa7, 0x70])) result["Matroska.chapters"] = "present";
+    if (hasBytes(bytes, [0x19, 0x41, 0xa4, 0x69])) result["Matroska.attachments"] = "present";
+    addMarkerFields(text, [["WritingApp", "Matroska.writing-application"], ["MuxingApp", "Matroska.muxing-application"], ["Location", "Matroska.location"]], result);
+  } else {
+    inspectIsoBmffBoxes(bytes, result);
+  }
   return result;
-}
-
-async function filesEqual(left: Blob, right: Blob): Promise<boolean> {
-  if (left.size !== right.size) return false;
-  const [leftBytes, rightBytes] = await Promise.all([left.arrayBuffer(), right.arrayBuffer()]);
-  const a = new Uint8Array(leftBytes);
-  const b = new Uint8Array(rightBytes);
-  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
-  return true;
 }
 
 async function inspect(file: File, kind: FileKind | undefined): Promise<{ fields: Detected; limitations: string[]; format: string }> {
   const ext = file.name.split(".").pop()?.toUpperCase() ?? "UNKNOWN";
   if (kind === "jpeg" || kind === "image" || kind === "gif") {
-    return { fields: await inspectImage(file), limitations: ["Detection is based on targeted JPEG markers, PNG/WebP chunks, and GIF extension blocks; metadata stored in unsupported private blocks may not be listed."], format: ext };
+    return { fields: await inspectImage(file), limitations: ["The comparison inspects targeted JPEG markers, PNG chunks, GIF extensions, WebP chunks, and readable image tags; unsupported vendor-specific blocks may not be listed."], format: ext };
   }
-  if (kind === "pdf") return { fields: await inspectPdf(file), limitations: ["The comparison checks standard PDF document-info keys visible in the file bytes; embedded-object metadata is not inspected."], format: ext };
+  if (kind === "pdf") return { fields: await inspectPdf(file), limitations: ["The comparison checks the PDF document-info dictionary and catalog XMP stream; embedded-object metadata is not inspected."], format: ext };
   if (kind === "docx") return { fields: await inspectDocx(file), limitations: ["The comparison checks DOCX core, application, and custom property parts; metadata inside embedded documents is not inspected."], format: ext };
-  if (kind === "container") return { fields: await inspectContainer(file), limitations: ["Audio/video detection compares the file with its matching local container cleaner, so findings correspond to structures that cleaner changes; untouched codec-private/vendor data is outside this comparison."], format: ext };
+  if (kind === "container") return { fields: await inspectContainer(file), limitations: ["The comparison inspects targeted ID3, RIFF, FLAC, Matroska, and ISO-BMFF structures; codec-private and unsupported vendor blocks are not fully enumerated."], format: ext };
   return { fields: {}, limitations: ["This file type is not supported by the browser comparison reader."], format: ext };
 }
 
@@ -212,7 +312,8 @@ function toFields(original: Detected, cleaned: Detected): { all: MetadataField[]
     const originalValue = original[name];
     const cleanedValue = cleaned[name];
     const status: MetadataStatus = originalValue && !cleanedValue ? "removed" : originalValue && cleanedValue ? "present" : "not-detected";
-    return { name, original: originalValue, cleaned: cleanedValue, status };
+    const assessment = assessMetadataField(name);
+    return { name, original: originalValue, cleaned: cleanedValue, status, ...assessment };
   });
   return { all, removed: all.filter((field) => field.status === "removed"), preserved: all.filter((field) => field.status === "present") };
 }

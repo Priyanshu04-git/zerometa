@@ -38,11 +38,11 @@ Every photo you take contains a hidden layer of information called metadata. Thi
 
 ## How to Remove Photo Metadata
 
-### With PrivMeta
+### With ZeroMeta
 
-1. Visit [PrivMeta](/)
+1. Visit [ZeroMeta](/)
 2. Drag your photo onto the interface
-3. PrivMeta instantly processes the image locally in your browser
+3. ZeroMeta instantly processes the image locally in your browser
 4. Download the cleaned version with targeted metadata structures removed
 
 ### Other Methods
@@ -53,7 +53,7 @@ Every photo you take contains a hidden layer of information called metadata. Thi
 2. **Online Tools** (not recommended due to privacy risks)
 3. **Photo Editing Software**: Photoshop, GIMP, Affinity Photo
 
-## Why Choose PrivMeta for Metadata Removal
+## Why Choose ZeroMeta for Metadata Removal
 
 - 🛡️ **100% client-side processing**: Your photos never leave your computer
 - ⚡ **Instant cleaning**: Single drag-and-drop operation
@@ -64,17 +64,17 @@ Every photo you take contains a hidden layer of information called metadata. Thi
 
 1. **Regularly clean photos** before sharing online
 2. **Disable location services** in your camera app
-3. **Use local tools** like PrivMeta instead of online services
+3. **Use local tools** like ZeroMeta instead of online services
 4. **Educate friends and family** about photo metadata risks
 
 > "Privacy isn't about hiding something wrong; it's about controlling what's personal." (Anon)
 
-Take control of your digital footprint today by auditing and cleaning your photo metadata. With tools like PrivMeta, privacy protection is just a drag-and-drop away.
+Take control of your digital footprint today by auditing and cleaning your photo metadata. With tools like ZeroMeta, privacy protection is just a drag-and-drop away.
 
 For a full walkthrough of all removal methods, Windows, Mac, mobile, and in-browser, see our [photo metadata removal guide](/blog/how-to-strip-metadata-from-photos).
 
 ## Remove Your Photo Metadata Now
 
-Drop supported photos into [PrivMeta](/) and the documented EXIF, IPTC, XMP and comment structures are removed in your browser. No file upload or account.
+Drop supported photos into [ZeroMeta](/) and the documented EXIF, IPTC, XMP and comment structures are removed in your browser. No file upload or account.
 
 [Clean Your Photos Now](/)

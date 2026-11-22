@@ -105,7 +105,7 @@ async function main() {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
         context.font = "bold 30px system-ui";
-        context.fillText("PrivMeta MediaRecorder fixture", 70, 80);
+        context.fillText("ZeroMeta MediaRecorder fixture", 70, 80);
         context.font = "22px monospace";
         context.fillText(`Frame ${String(frame).padStart(4, "0")}`, 220, 320);
         context.fillStyle = `hsl(${(hue + 180) % 360} 90% 60%)`;

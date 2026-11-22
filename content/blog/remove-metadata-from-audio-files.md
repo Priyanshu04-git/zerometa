@@ -68,13 +68,13 @@ When distributing music through platforms, some metadata fields are publicly vis
 
 ## How to Remove Metadata from Audio Files
 
-### PrivMeta. Private, Client-Side Processing
+### ZeroMeta. Private, Client-Side Processing
 
-PrivMeta uses small, format-specific JavaScript parsers to remove recognised tags without transcoding the audio:
+ZeroMeta uses small, format-specific JavaScript parsers to remove recognised tags without transcoding the audio:
 
 **Supported formats:** MP3, WAV, FLAC, AAC, M4A
 
-1. Visit [PrivMeta](/)
+1. Visit [ZeroMeta](/)
 2. Drop your audio files into the upload area
 3. Click **Remove metadata**
 4. Download the cleaned files
@@ -97,9 +97,9 @@ MP3Tag is a free desktop tag editor. Select your files, select all tags, and del
 
 ## What About Embedded Album Art?
 
-Embedded album artwork images can themselves contain EXIF data (photographer name, software, copyright). PrivMeta removes the conventional artwork structures it targets, including MP3 attached-picture frames, FLAC picture blocks, and M4A metadata atoms.
+Embedded album artwork images can themselves contain EXIF data (photographer name, software, copyright). ZeroMeta removes the conventional artwork structures it targets, including MP3 attached-picture frames, FLAC picture blocks, and M4A metadata atoms.
 
-If you need to keep artwork but still protect privacy, you can re-attach a clean version of the image (stripped through PrivMeta's image cleaner first) after the audio metadata is removed.
+If you need to keep artwork but still protect privacy, you can re-attach a clean version of the image (stripped through ZeroMeta's image cleaner first) after the audio metadata is removed.
 
 ## When to Remove Audio Metadata
 

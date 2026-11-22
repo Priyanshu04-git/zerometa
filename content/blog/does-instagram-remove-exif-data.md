@@ -59,9 +59,9 @@ This can show how that path transformed the delivered copy. It cannot demonstrat
 
 ## Remove Metadata Before Uploading to Instagram
 
-[PrivMeta](/) cleans targeted EXIF, XMP, IPTC, and comment structures from supported photos locally in your browser.
+[ZeroMeta](/) cleans targeted EXIF, XMP, IPTC, and comment structures from supported photos locally in your browser.
 
-1. Open [PrivMeta](/).
+1. Open [ZeroMeta](/).
 2. Add the photo.
 3. Select **Remove metadata**.
 4. Download and, where necessary, inspect the cleaned copy.
@@ -75,4 +75,4 @@ Metadata cleaning does not remove visible information such as faces, addresses, 
 
 Instagram's processing may protect people downloading the displayed image from common EXIF fields. Cleaning first addresses a different risk: preventing unnecessary metadata from accompanying the original upload.
 
-[Remove documented photo metadata with PrivMeta](/) before posting. The photo is cleaned in your browser without a file-processing upload.
+[Remove documented photo metadata with ZeroMeta](/) before posting. The photo is cleaned in your browser without a file-processing upload.

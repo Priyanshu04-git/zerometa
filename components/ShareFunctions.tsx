@@ -8,7 +8,7 @@ import Typography from "./Typography";
 import { toast } from "sonner";
 
 const ShareFunctions = () => {
-  const SHARE_URL = "https://privmeta-kqbqzzbs.manus.space/";
+  const SHARE_URL = "https://privmeta-n4x4wqum.manus.space/";
   const [copied, setCopied] = useState(false);
 
   const openShare = (url: string) => {
@@ -23,7 +23,7 @@ const ShareFunctions = () => {
 
   const handleBookmark = () => {
     toast.info("Bookmark this page", {
-      description: "Press Ctrl+D (or Cmd+D on Mac) to bookmark PrivMeta.",
+      description: "Press Ctrl+D (or Cmd+D on Mac) to bookmark ZeroMeta.",
       duration: 5000,
     });
   };
@@ -131,7 +131,6 @@ const ShareFunctions = () => {
             readOnly
             value={SHARE_URL}
             className="h-10 type-fluid type-button border-0 rounded-none pointer-events-none focus-visible:ring-0 focus-visible:border-0"
-            style={{ fontSize: "12px" }}
           />
           <span className="type-fluid type-button h-10 inline-flex items-center justify-center px-(--space-lg) border-l-2 border-foreground bg-background group-hover:bg-muted/50 transition-colors text-foreground">
             {copied ? <Check className="size-5" /> : <Copy className="size-5" />}

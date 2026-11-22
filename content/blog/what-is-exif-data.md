@@ -77,18 +77,18 @@ Online: Upload to a service like Jeffrey's Exif Viewer, though be cautious about
 
 ## How to Remove EXIF Data from Photos
 
-### PrivMeta. Private, In-Browser Removal
+### ZeroMeta. Private, In-Browser Removal
 
-PrivMeta removes the documented privacy-metadata structures targeted by its JPEG, PNG, static WebP, and GIF cleaners directly in your browser. Photo bytes are not uploaded to a processing server:
+ZeroMeta removes the documented privacy-metadata structures targeted by its JPEG, PNG, static WebP, and GIF cleaners directly in your browser. Photo bytes are not uploaded to a processing server:
 
-1. Go to [PrivMeta](/)
+1. Go to [ZeroMeta](/)
 2. Drop your images into the dropzone
 3. Click **Remove metadata**
 4. Download your cleaned photos
 
 File cleaning runs locally in the browser. No account or file upload is required.
 
-For JPEG files specifically, PrivMeta uses targeted EXIF removal that preserves image quality without re-encoding. The pixels remain identical.
+For JPEG files specifically, ZeroMeta uses targeted EXIF removal that preserves image quality without re-encoding. The pixels remain identical.
 
 For a step-by-step walkthrough covering Windows, Mac, and mobile methods too, see our [photo metadata removal guide](/blog/how-to-strip-metadata-from-photos).
 
@@ -104,7 +104,7 @@ These settings prevent future GPS recording but do not strip EXIF from existing 
 
 Most major platforms, including Instagram, Facebook, Twitter/X, and WhatsApp, automatically strip EXIF data when you upload photos. However, this is not guaranteed, platform behaviour changes without notice, and it does nothing if you share files directly (via email, AirDrop, messaging apps, file sharing links, etc.).
 
-For any direct file sharing, email, AirDrop, messaging apps, always strip EXIF yourself first using a tool like [PrivMeta](/) that processes files locally in your browser.
+For any direct file sharing, email, AirDrop, messaging apps, always strip EXIF yourself first using a tool like [ZeroMeta](/) that processes files locally in your browser.
 
 ## Try It Now
 

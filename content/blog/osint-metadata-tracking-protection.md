@@ -42,7 +42,7 @@ Open Source Intelligence (OSINT) analysts use publicly available information to 
    - [Strip author information from Word documents](/blog/remove-metadata-from-word-document): name, edit history, company
    - [Clear metadata from PDFs](/blog/remove-metadata-from-pdf-guide): author, creator app, modification dates
 
-   PrivMeta targets these fields across its supported formats and processes file bytes locally in your browser without uploading them.
+   ZeroMeta targets these fields across its supported formats and processes file bytes locally in your browser without uploading them.
 
 2. **Metadata Auditing**:
    - Monthly reviews of your digital footprint
@@ -73,10 +73,10 @@ As artificial intelligence advances, OSINT capabilities are growing exponentiall
 
 > "In the digital age, privacy isn't about having nothing to hide. It's about having control over what's revealed."
 
-By understanding how OSINT analysts use metadata and implementing proper protection measures, you can maintain control over your digital footprint. Tools like PrivMeta provide an essential layer of defense by allowing you to clean metadata locally before it leaves your device.
+By understanding how OSINT analysts use metadata and implementing proper protection measures, you can maintain control over your digital footprint. Tools like ZeroMeta provide an essential layer of defense by allowing you to clean metadata locally before it leaves your device.
 
 ## Clean Your Files Before They Can Be Used Against You
 
-Metadata can provide an easy investigative trail. [PrivMeta](/) removes documented metadata structures from supported photos, documents, PDFs, video, and audio locally in your browser without uploading file bytes. Visible content and unknown structures still require review.
+Metadata can provide an easy investigative trail. [ZeroMeta](/) removes documented metadata structures from supported photos, documents, PDFs, video, and audio locally in your browser without uploading file bytes. Visible content and unknown structures still require review.
 
 [Remove Metadata Now](/)

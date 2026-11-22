@@ -145,7 +145,7 @@ async function cleanThroughUi(page: Page, inputPath: string, outputDirectory: st
   const outputPath = path.join(outputDirectory, download.suggestedFilename());
   await download.saveAs(outputPath);
   if (!fs.existsSync(outputPath) || fs.statSync(outputPath).size === 0) {
-    throw new Error("PrivMeta produced an empty or missing download");
+    throw new Error("ZeroMeta produced an empty or missing download");
   }
   return outputPath;
 }

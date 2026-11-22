@@ -55,20 +55,20 @@ Cleaning is only one part of reviewing an upload. Names, addresses, faces, docum
 
 ## How to Remove Metadata Before Uploading
 
-[PrivMeta](/) runs its format-specific cleaners in your browser. File bytes and filenames are not sent to a file-processing server.
+[ZeroMeta](/) runs its format-specific cleaners in your browser. File bytes and filenames are not sent to a file-processing server.
 
-1. Open [PrivMeta](/).
+1. Open [ZeroMeta](/).
 2. Add the supported file you intend to upload.
 3. Select **Remove metadata**.
 4. Download the cleaned result.
 5. Review the visible content and filename.
 6. Upload the cleaned copy to the AI service.
 
-PrivMeta supports documented structures in common images, [PDF files](/blog/remove-metadata-from-pdf-guide), [DOCX documents](/blog/remove-metadata-from-word-document), [audio files](/blog/remove-metadata-from-audio-files), and [video containers](/blog/remove-metadata-from-video-guide). For photos, see the consolidated guide to [removing photo metadata](/blog/how-to-strip-metadata-from-photos).
+ZeroMeta supports documented structures in common images, [PDF files](/blog/remove-metadata-from-pdf-guide), [DOCX documents](/blog/remove-metadata-from-word-document), [audio files](/blog/remove-metadata-from-audio-files), and [video containers](/blog/remove-metadata-from-video-guide). For photos, see the consolidated guide to [removing photo metadata](/blog/how-to-strip-metadata-from-photos).
 
-## What PrivMeta Does Not Remove
+## What ZeroMeta Does Not Remove
 
-Metadata removal is not redaction. PrivMeta does not hide information visible in a picture, remove names from document text, accept or reject tracked changes, delete visible comments, anonymise voices, or change information encoded into the media itself.
+Metadata removal is not redaction. ZeroMeta does not hide information visible in a picture, remove names from document text, accept or reject tracked changes, delete visible comments, anonymise voices, or change information encoded into the media itself.
 
 The cleaner targets documented structures and has published format limitations. Unsupported or ambiguous files may be rejected rather than rewritten speculatively.
 
@@ -76,7 +76,7 @@ The cleaner targets documented structures and has published format limitations. 
 
 That is a separate search intent. An image created by an AI tool may contain ordinary EXIF or XMP, generator parameters in format-specific text fields, provenance credentials, or signals embedded in the pixels themselves.
 
-PrivMeta can target some conventional metadata structures, but it is not an AI-watermark remover and does not promise to erase every provenance mechanism. See [AI image metadata: what PrivMeta can and cannot remove](/blog/ai-image-metadata-remover) before using it for that purpose.
+ZeroMeta can target some conventional metadata structures, but it is not an AI-watermark remover and does not promise to erase every provenance mechanism. See [AI image metadata: what ZeroMeta can and cannot remove](/blog/ai-image-metadata-remover) before using it for that purpose.
 
 ## Make File Review Part of the Upload
 
@@ -88,4 +88,4 @@ Before uploading a sensitive file to any external service:
 4. Inspect the cleaned result where the context is sensitive.
 5. Review the service's current privacy and retention controls.
 
-[Clean supported files with PrivMeta](/) before your next AI upload. Processing happens locally in the browser with no account required.
+[Clean supported files with ZeroMeta](/) before your next AI upload. Processing happens locally in the browser with no account required.

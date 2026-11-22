@@ -2,7 +2,6 @@
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
 import Typography from "./Typography";
-import { Github } from "lucide-react";
 
 const Logo = () => (
   <svg viewBox="0 0 53 53" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-[0.9em] w-auto text-foreground">
@@ -12,41 +11,25 @@ const Logo = () => (
   </svg>
 );
 
-const SourceLink = () => (
-  <a
-    href="https://github.com/Priyanshu04-git/privmeta"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="PrivMeta source repository on GitHub"
-    title="Source on GitHub"
-    className="inline-flex h-12 items-center justify-center gap-2 rounded-md px-(--space-md) text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-  >
-    <Github className="size-5" aria-hidden="true" />
-    <span className="hidden sm:inline">Source</span>
-  </a>
-);
-
 const Navbar = () => {
   return (
     <header className="relative z-50">
       <nav className="h-40 flex flex-col sm:flex-row gap-(--space-lg) justify-center sm:justify-between items-start sm:items-center">
         <div className="flex justify-between items-center w-full">
-          <Link href="/" aria-label="Go to PrivMeta homepage">
+          <Link href="/" aria-label="Go to ZeroMeta homepage">
             <span className="flex items-center gap-(--fluid-sm-lg) type-fluid type-h1">
               <Logo />
               <Typography as="span" variant="h1" className="leading-none">
-                PrivMeta
+                ZeroMeta
               </Typography>
             </span>
           </Link>
           <div className="flex gap-(--space-md) sm:hidden">
-            <SourceLink />
             <ThemeToggle />
           </div>
         </div>
 
         <div className="gap-(--space-md) hidden sm:flex">
-          <SourceLink />
           <ThemeToggle />
         </div>
       </nav>

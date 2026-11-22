@@ -4,10 +4,10 @@ Disallow: /private/
 Disallow: /tmp/
 
 # Main sitemap
-Sitemap: https://www.privmeta.com/sitemap.xml
+Sitemap: https://privmeta-n4x4wqum.manus.space/sitemap.xml
 
 # Image sitemap
-Sitemap: https://www.privmeta.com/image-sitemap.xml
+Sitemap: https://privmeta-n4x4wqum.manus.space/image-sitemap.xml
 
 # Crawl-delay: 10
 # Uncomment above if you want to limit crawl rate

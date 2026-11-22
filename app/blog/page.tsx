@@ -5,22 +5,22 @@ import Typography from "@/components/Typography";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Privacy Blog - Metadata Guides & Tips | PrivMeta",
+  title: "Privacy Blog - Metadata Guides & Tips | ZeroMeta",
   description:
-    "Learn how to protect your privacy by removing metadata from photos, PDFs, videos, and documents. Practical guides and tips from the PrivMeta team.",
-  alternates: { canonical: "https://www.privmeta.com/blog" },
+    "Learn how to protect your privacy by removing metadata from photos, PDFs, videos, and documents. Practical guides and tips from the ZeroMeta team.",
+  alternates: { canonical: "https://privmeta-n4x4wqum.manus.space/blog" },
   openGraph: {
-    title: "Privacy Blog - Metadata Guides & Tips | PrivMeta",
+    title: "Privacy Blog - Metadata Guides & Tips | ZeroMeta",
     description:
-      "Learn how to protect your privacy by removing metadata from photos, PDFs, videos, and documents. Practical guides and tips from the PrivMeta team.",
-    url: "https://www.privmeta.com/blog",
-    siteName: "PrivMeta",
+      "Learn how to protect your privacy by removing metadata from photos, PDFs, videos, and documents. Practical guides and tips from the ZeroMeta team.",
+    url: "https://privmeta-n4x4wqum.manus.space/blog",
+    siteName: "ZeroMeta",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 628, alt: "PrivMeta Blog" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 628, alt: "ZeroMeta Blog" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy Blog - Metadata Guides & Tips | PrivMeta",
+    title: "Privacy Blog - Metadata Guides & Tips | ZeroMeta",
     description: "Practical guides on removing metadata and protecting your digital privacy.",
     images: ["/og-image.png"],
   },
