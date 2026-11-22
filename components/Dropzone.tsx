@@ -103,7 +103,7 @@ export default function Dropzone({ fileStore, fileStatuses, fileErrors = {}, onF
         onDragLeave={() => { if (!processing) setHighlight(false); }}
         onDrop={(event) => { if (!processing) { event.preventDefault(); setHighlight(false); handleFiles(event.dataTransfer.files); event.dataTransfer.clearData(); } }}
       >
-        <input ref={fileInputRef} type="file" multiple accept={acceptedExtensions.join(",")} onChange={(event) => event.target.files && handleFiles(event.target.files)} className="hidden" aria-hidden="true" />
+        <input ref={fileInputRef} type="file" multiple accept={acceptedExtensions.join(",")} onClick={(event) => event.stopPropagation()} onChange={(event) => event.target.files && handleFiles(event.target.files)} className="hidden" aria-hidden="true" />
         <div className="flex size-16 items-center justify-center rounded-2xl bg-(--accent-secondary) text-(--accent-primary)"><FileIcon size={30} strokeWidth={1.8} /></div>
         <div className="flex flex-col items-center text-center leading-tight"><Typography as="p" variant="label" className="leading-tight">Drop files here</Typography><Typography as="p" variant="bodySm" muted className="mt-2">or click to browse · paste an image/file from your clipboard</Typography></div>
         <div className="flex flex-wrap justify-center gap-2" onClick={(event) => event.stopPropagation()}>
